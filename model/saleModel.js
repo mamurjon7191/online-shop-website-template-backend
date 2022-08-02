@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const saleScheme = new mongoose.Schema({
-  productId: {
-    type: mongoose.Schema.ObjectId,
-    ref: "products",
-  },
   photo: {
     type: String,
     required: [true, "Siz rasmni kirirtishingiz kerak"],

@@ -52,6 +52,12 @@ const userScheme = new mongoose.Schema({
     },
     message: "Iltimos togri password kiriting",
   },
+  role: {
+    type: "String",
+    required: [true, "Siz roleni kiritishingiz kerak"],
+    enum: ["user", "admin", "moderator"],
+    default: "user",
+  },
 });
 
 const User = mongoose.model("users", userScheme);

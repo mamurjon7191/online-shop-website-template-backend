@@ -8,6 +8,9 @@ const errController = require("../controller/errController");
 const productRouter = require("../router/productRouter");
 const colorRouter = require("../router/colorRouter");
 const sizeRouter = require("../router/sizeRouter");
+const saleRouter = require("../router/saleRouter");
+const categoryRouter = require("../router/categoryRouter");
+const viewRouter = require("../router/viewRouter");
 
 // --- Routes-----
 
@@ -19,15 +22,19 @@ app.use(cookie_parser());
 
 app.set("view engine", "pug");
 
-app.set("views", path.join(__dirname, "view"));
+app.set("views", "view");
 
-// --- Routes-----
+// --- Routes for api-----
 
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/colors", colorRouter);
 app.use("/api/v1/sizes", sizeRouter);
+app.use("/api/v1/sales", saleRouter);
+app.use("/api/v1/categories", categoryRouter);
 
-// --- Routes-----
+// --- Routes for view-----
+
+app.use("/", viewRouter);
 
 app.all("*", (req, res, next) => {
   return next(new AppError("This page is not defined", 404));

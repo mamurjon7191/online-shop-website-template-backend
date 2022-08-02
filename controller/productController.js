@@ -13,13 +13,16 @@ const options1 = {
 const options2 = {
   path: "sizeId",
 };
+const options3 = {
+  path: "saleId",
+};
 
 const getAllProducts = (req, res, next) => {
-  getAll(req, res, next, Product, options1, options2);
+  getAll(req, res, next, Product, options1, options2, options3);
 };
 
 const getOneProduct = (req, res, next) => {
-  getOne(req, res, next, Product, options1, options2);
+  getOne(req, res, next, Product, options1, options2, options3);
 };
 
 const addProduct = (req, res, next) => {

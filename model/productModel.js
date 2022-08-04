@@ -21,6 +21,10 @@ const productScheme = new mongoose.Schema(
       type: String,
       required: [true, "Siz information kiritishhingiz kerak"],
     },
+    photo: {
+      type: String,
+      required: [true, "Siz photoni kiritishhingiz kerak"],
+    },
     sizeId: {
       type: mongoose.Schema.ObjectId,
       ref: "sizes",
@@ -40,6 +44,10 @@ const productScheme = new mongoose.Schema(
     categoryId: {
       type: mongoose.Schema.ObjectId,
       ref: "categories",
+    },
+    createdAt: {
+      type: Date,
+      default: new Date(),
     },
   },
   {

@@ -11,6 +11,7 @@ const sizeRouter = require("../router/sizeRouter");
 const saleRouter = require("../router/saleRouter");
 const categoryRouter = require("../router/categoryRouter");
 const viewRouter = require("../router/viewRouter");
+const reviewRouter = require("../router/reviewRouter");
 
 // --- Routes-----
 
@@ -31,7 +32,7 @@ app.use("/api/v1/colors", colorRouter);
 app.use("/api/v1/sizes", sizeRouter);
 app.use("/api/v1/sales", saleRouter);
 app.use("/api/v1/categories", categoryRouter);
-
+app.use("/api/v1/reviews", reviewRouter);
 // --- Routes for view-----
 
 app.use("/", viewRouter);

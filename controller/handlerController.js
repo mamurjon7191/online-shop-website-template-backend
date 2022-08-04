@@ -1,6 +1,7 @@
 const { options } = require("../middleware/app");
 const AppError = require("../utility/AppError");
 const catchErrAsync = require("../utility/catchErrorAsync");
+const FeatureApi = require("../utility/featureApi");
 
 const responseFunction = (res, statusCode, data) => {
   if (Array.isArray(data)) {
@@ -19,38 +20,46 @@ const responseFunction = (res, statusCode, data) => {
 
 const getAll = catchErrAsync(
   async (req, res, next, Model, options1, options2, options3) => {
+    const filter = new FeatureApi(req.query, Model)
+      .filter()
+      .sorting()
+      .field()
+      .pagination();
     let data;
     if (options3) {
-      data = await Model.find()
+      data = await filter.model
         .populate(options1)
         .populate(options2)
         .populate(options3);
     } else if (options2) {
-      data = await Model.find().populate(options1).populate(options2);
+      data = await filter.model.populate(options1).populate(options2);
     } else if (options1) {
-      data = await Model.find().populate(options1);
+      data = await filter.model.populate(options1);
     } else {
-      data = await Model.find();
+      data = await filter.model;
     }
     responseFunction(res, 200, data);
   }
 );
 const getOne = catchErrAsync(
   async (req, res, next, Model, options1, options2, options3) => {
+    const filter = new FeatureApi(req.query, Model)
+      .filter()
+      .sorting()
+      .field()
+      .pagination();
     let data;
     if (options3) {
-      data = await Model.find()
+      data = await filter.model
         .populate(options1)
         .populate(options2)
         .populate(options3);
     } else if (options2) {
-      data = await Model.findById(req.params.id)
-        .populate(options1)
-        .populate(options2);
+      data = await filter.model.populate(options1).populate(options2);
     } else if (options1) {
-      data = await Model.findById(req.params.id).populate(options1);
+      data = await filter.model.populate(options1);
     } else {
-      data = await Model.findById(req.params.id);
+      data = await filter.model;
     }
     responseFunction(res, 200, data);
   }

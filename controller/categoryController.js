@@ -17,7 +17,7 @@ const getAllCategories = (req, res, next) => {
   getAll(req, res, next, Category, options1);
 };
 
-const getOneCategory = (req, res, next, options1) => {
+const getOneCategory = (req, res, next) => {
   getOne(req, res, next, Category, options1);
 };
 

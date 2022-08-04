@@ -1,4 +1,24 @@
 extends base
+
+mixin specialOffer(discount,photo)
+ .product-offer.mb-30(style='height: 200px;')
+    img.img-fluid(src=`/img/${photo}` alt='')
+    .offer-text
+      h6.text-white.text-uppercase=`Save ${discount}%`
+      h3.text-white.mb-3 Special Offer
+      a.btn.btn-primary(href='') Shop Now
+
+mixin specialOfferBig(discount,photo)
+  .col-md-6
+    .product-offer.mb-30(style='height: 300px;')
+      img.img-fluid(src=`img/${photo}` alt='')
+      .offer-text
+        h6.text-white.text-uppercase=`Save ${discount}%`
+        h3.text-white.mb-3 Special Offer
+        a.btn.btn-primary(href='') Shop Now
+
+
+
 block main
   // Carousel Start
   .container-fluid.mb-3
@@ -35,18 +55,8 @@ block main
                     | Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam
                   a.btn.btn-outline-light.py-2.px-4.mt-3.animate__animated.animate__fadeInUp(href='#') Shop Now
       .col-lg-4
-        .product-offer.mb-30(style='height: 200px;')
-          img.img-fluid(src='img/offer-1.jpg' alt='')
-          .offer-text
-            h6.text-white.text-uppercase Save 20%
-            h3.text-white.mb-3 Special Offer
-            a.btn.btn-primary(href='') Shop Now
-        .product-offer.mb-30(style='height: 200px;')
-          img.img-fluid(src='img/offer-2.jpg' alt='')
-          .offer-text
-            h6.text-white.text-uppercase Save 20%
-            h3.text-white.mb-3 Special Offer
-            a.btn.btn-primary(href='') Shop Now
+        +specialOffer(sale[0].discount,sale[0].photo)
+        +specialOffer(sale[0].discount,sale[1].photo)
   // Carousel End
   // Featured Start
   .container-fluid.pt-5
@@ -73,102 +83,15 @@ block main
     h2.section-title.position-relative.text-uppercase.mx-xl-5.mb-4
       span.bg-secondary.pr-3 Categories
     .row.px-xl-5.pb-3
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-1.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-2.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-3.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-4.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-4.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-3.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-2.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-1.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-2.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-1.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-4.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
-      .col-lg-3.col-md-4.col-sm-6.pb-1
-        a.text-decoration-none(href='')
-          .cat-item.img-zoom.d-flex.align-items-center.mb-4
-            .overflow-hidden(style='width: 100px; height: 100px;')
-              img.img-fluid(src='img/cat-3.jpg' alt='')
-            .flex-fill.pl-3
-              h6 Category Name
-              small.text-body 100 Products
+      each categories in category 
+        .col-lg-3.col-md-4.col-sm-6.pb-1
+          a.text-decoration-none(href=`/shop?id=${categories._id}`)
+            .cat-item.img-zoom.d-flex.align-items-center.mb-4
+              .overflow-hidden(style='width: 100px; height: 100px;')
+                img.img-fluid(src=`img/${categories.categoryPhoto}` alt='')
+              .flex-fill.pl-3
+                h6=categories.categoryName
+                small.text-body=categories.products.length
   // Categories End
   // Products Start
   .container-fluid.pt-5.pb-3
@@ -387,20 +310,8 @@ block main
   // Offer Start
   .container-fluid.pt-5.pb-3
     .row.px-xl-5
-      .col-md-6
-        .product-offer.mb-30(style='height: 300px;')
-          img.img-fluid(src='img/offer-1.jpg' alt='')
-          .offer-text
-            h6.text-white.text-uppercase Save 20%
-            h3.text-white.mb-3 Special Offer
-            a.btn.btn-primary(href='') Shop Now
-      .col-md-6
-        .product-offer.mb-30(style='height: 300px;')
-          img.img-fluid(src='img/offer-2.jpg' alt='')
-          .offer-text
-            h6.text-white.text-uppercase Save 20%
-            h3.text-white.mb-3 Special Offer
-            a.btn.btn-primary(href='') Shop Now
+      +specialOfferBig(sale[0].discount,sale[0].photo)
+      +specialOfferBig(sale[0].discount,sale[1].photo)
   // Offer End
   // Products Start
   .container-fluid.pt-5.pb-3

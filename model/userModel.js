@@ -13,12 +13,9 @@ const userScheme = new mongoose.Schema({
     required: [true, "Siz nameni kiritishingiz kerak"],
   },
   email: {
+    unique: [true, "Siz oldin foydalanilgan email kiritdingiz"],
     type: String,
     required: [true, "Siz emailni kirtishingiz kerak"],
-    unique: [
-      true,
-      "Bu emaildan oldin foydalanilgan Iltimos boshqa email kiriting",
-    ],
     lowercase: true,
     validator: {
       validate: function (val) {
@@ -29,8 +26,10 @@ const userScheme = new mongoose.Schema({
   },
   photo: {
     type: String,
+    default: "default.jpg",
   },
   password: {
+    select: false,
     type: String,
     required: [true, "Siz passwordni kiritishingiz kerak"],
     validator: {
@@ -44,6 +43,7 @@ const userScheme = new mongoose.Schema({
   },
   passwordConfirm: {
     type: String,
+    select: false,
     required: [true, "Siz passwordConfirmni kiritishingiz kerak"],
     validate: {
       validator: function (val) {
@@ -58,8 +58,47 @@ const userScheme = new mongoose.Schema({
     enum: ["user", "admin", "moderator"],
     default: "user",
   },
+  passwordChangedDate: {
+    type: Date,
+    default: null,
+  },
+  resetTokenHash: String,
+  resetTokenVaqti: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
-const User = mongoose.model("users", userScheme);
+userScheme.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  const hashPassword = await bcrypt.hash(this.password, 10);
+
+  console.log(hashPassword);
+
+  this.password = hashPassword;
+
+  this.passwordConfirm = undefined;
+
+  next();
+});
+
+userScheme.methods.hashTokenMethod = function () {
+  const token = crypto.randomBytes(32).toString("hex"); // random raqamni yaratib beradi -->hex dgani ham harf ham son qatnashadi
+
+  const hashToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  this.resetTokenHash = hashToken;
+
+  this.resetTokenVaqti = Date.now() + 10 * 60 * 1000;
+
+  return token;
+};
+
+const User = mongoose.model("users6", userScheme);
 
 module.exports = User;

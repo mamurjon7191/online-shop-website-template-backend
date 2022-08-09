@@ -10,10 +10,17 @@
     .col-lg-6.text-center.text-lg-right
       .d-inline-flex.align-items-center
         .btn-group
-          button.btn.btn-sm.btn-light.dropdown-toggle(type='button' data-toggle='dropdown') My Account
-          .dropdown-menu.dropdown-menu-right
-            button.dropdown-item(type='button') Sign in
-            button.dropdown-item(type='button') Sign up
+          if userData
+           button(href="/logout").logout Logout
+           a(href="/account").nav__el
+            img(src=`img/users/${userData.photo}` alt=`${userData.name}`).nav__user-img
+            span.userName=userData.name
+          else
+           button.btn.btn-sm.btn-light.dropdown-toggle(type='button' data-toggle='dropdown') My Account
+           .dropdown-menu.dropdown-menu-right
+              a.dropdown-item(href='/login') Sign in
+              a.dropdown-item(href='/sign-up') Sign up
+           
         .btn-group.mx-2
           button.btn.btn-sm.btn-light.dropdown-toggle(type='button' data-toggle='dropdown') USD
           .dropdown-menu.dropdown-menu-right
@@ -89,4 +96,4 @@
             a.btn.px-0.ml-3(href='')
               i.fas.fa-shopping-cart.text-primary
               span.badge.text-secondary.border.border-secondary.rounded-circle(style='padding-bottom: 2px;') 0
-// Navbar End
+script(src="js/logout.js") 

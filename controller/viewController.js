@@ -10,7 +10,6 @@ const getHomePage = catchErrLittle(async (req, res, next) => {
     path: "products",
   });
   const sale = await Sale.find();
-  console.log(sale);
   res.status(200).render("home", {
     category: categories,
     sale,
@@ -61,6 +60,25 @@ const getCheckoutPage = catchErrLittle(async (req, res, next) => {
   });
 });
 
+const getLoginPage = catchErrLittle(async (req, res, next) => {
+  res.status(200).render("login");
+});
+const getSignUpPage = catchErrLittle(async (req, res, next) => {
+  res.status(200).render("sign-up");
+});
+
+const logout = catchErrLittle(async (req, res, next) => {
+  console.log("1");
+  res.cookie("jwt", "logout", {
+    maxAge: 10 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+    secure: req.protocol === "https" ? true : false,
+  });
+  res.status(200).json({
+    status: "success",
+  });
+});
+
 // const getShopPage = catchErrLittle(async (req, res, next) => {
 //   const categoryOne = await Category.findById(req.query.id).populate({
 //     path: "products",
@@ -72,10 +90,13 @@ const getCheckoutPage = catchErrLittle(async (req, res, next) => {
 // });
 
 module.exports = {
+  logout,
   getHomePage,
   getShopPage,
   getShopDetailPage,
   getCartPage,
   getContactPage,
   getCheckoutPage,
+  getLoginPage,
+  getSignUpPage,
 };

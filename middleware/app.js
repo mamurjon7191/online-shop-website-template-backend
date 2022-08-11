@@ -4,15 +4,16 @@ const path = require("path");
 const cookie_parser = require("cookie-parser");
 const AppError = require("../utility/AppError");
 const errController = require("../controller/errController");
-const User = require("../model/userModel");
 
 //----------
 const jwt = require("jsonwebtoken");
+
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
+
 const saveTokenCookie = (res, token, req) => {
   // shu cookieni ishlashini sorimiz
   res.cookie("jwt", token, {
@@ -21,40 +22,14 @@ const saveTokenCookie = (res, token, req) => {
     secure: req.protocol === "https" ? true : false,
   });
 };
-const viewController = require("../controller/viewController");
-const authController = require("../controller/authController");
+
 //----------
 
 app.use(cookie_parser());
 
 //---Login in to with google
-
-let userProfile;
-
-const GOOGLE_CLIENT_ID =
-  "1054066304408-autntra6d92fd2gneplbidk9k4lp9b4l.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
-
+const passport = require("../passport/passport");
 const session = require("express-session");
-
-const passport = require("passport");
-
-const GoogleStrategy = require("passport-google-oauth2").Strategy;
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:5001/auth/google/callback",
-      // passReqToCallback: true,
-    },
-    function (accessToken, refreshToken, profile, done) {
-      userProfile = profile;
-      return done(null, userProfile);
-    }
-  )
-);
 
 app.use(
   session({
@@ -67,14 +42,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function (user, cb) {
-  cb(null, user);
-});
-
-passport.deserializeUser(function (obj, cb) {
-  cb(null, obj);
-});
-
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -83,43 +50,15 @@ app.get(
 app.get(
   "/auth/google/callback/",
   passport.authenticate("google", {
-    successRedirect: "/success",
     failureRedirect: "/error",
-  })
+  }),
+  function (req, res) {
+    console.log("user", req.user);
+    const token = createToken(req.user.userId);
+    saveTokenCookie(res, token, req);
+    res.redirect("/success");
+  }
 );
-
-app.get(
-  "/success",
-  authController.isSign,
-  async (req, res, next) => {
-    if (!req.user) {
-      console.log(req.user);
-      const user = User({
-        name: userProfile.given_name,
-        email: userProfile.email,
-      });
-
-      await user.save({ validateBeforeSave: false });
-
-      console.log(user);
-
-      const token = createToken(user._id);
-
-      saveTokenCookie(res, token, req);
-
-      console.log(token);
-
-      res.locals.userData = user;
-
-      next();
-    } else {
-      next();
-    }
-  },
-  viewController.getHomePage
-);
-
-app.get("/error", (req, res) => res.render("sign-up"));
 
 //---Login in to with google
 

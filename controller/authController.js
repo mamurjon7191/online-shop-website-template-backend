@@ -157,7 +157,11 @@ const protect = catchErrLittle(async (req, res, next) => {
 });
 
 const isSign = async (req, res, next) => {
-  if (req.cookies.jwt) {
+  console.log("isSign in ga kirdi");
+  if (req.cookies.jwt == "logout") {
+    console.log("one");
+    next();
+  } else if (req.cookies.jwt) {
     // 1. Token bor yoqligini tekshirish headerdan
 
     let token;
@@ -165,9 +169,13 @@ const isSign = async (req, res, next) => {
     if (req.cookies.jwt) {
       token = req.cookies.jwt;
     }
+
+    console.log("token isSign dan", token);
     // 2.Tokenni tekshirish user olib ketgan token bn serverni tokeni
 
     const tekshir = await jwt.verify(token, process.env.JWT_SECRET); // bu error qaytaradi
+
+    console.log(tekshir);
 
     if (!token || token === "logout") {
       return next();

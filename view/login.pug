@@ -135,20 +135,21 @@ head
 .background
   .shape
   .shape
-form
-  h3 Login Here
-  label(for='username') Username
-  input#username(type='text' placeholder='Email or Phone')
-  label(for='password') Password
-  input#password(type='password' placeholder='Password')
-  button Log In
-  .social
-    .go
-      i.fab.fa-google
-      |   Google
-    .fb
-      i.fab.fa-facebook
-      |   Facebook
+body
+  form
+    h3 Login Here
+    label(for='username') Username
+    input#username(type='text' placeholder='Email or Phone')
+    label(for='password') Password
+    input#password(type='password' placeholder='Password')
+    button Log In
+    .social
+      .go
+        i.fab.fa-google
+        |   Google
+      .fb
+        i.fab.fa-facebook
+        |   Facebook
 
   script(src="js/axios.js") 
   script(src="js/login.js") 
